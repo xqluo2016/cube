@@ -27,7 +27,7 @@
     <table>
         <tr>
             <td></td><td></td> <td>
-                <table>
+                <table id="table6">
                     <tr>
                         <td></td> <td></td> <td></td> 
                     </tr>
@@ -60,7 +60,7 @@
             </td> <td></td> <td></td>
         </tr>
         <tr><td>
-            <table>
+            <table id="table7">
                 <tr>
                     <td></td> <td></td> <td></td> 
                 </tr>
@@ -115,7 +115,7 @@
                 </table>
             </td> <td>
 
-                <table>
+                <table id="table8">
                     <tr>
                         <td></td> <td></td> <td></td> 
                     </tr>
@@ -187,18 +187,33 @@
         }
         
         var faces = [newFace(0), newFace(1), newFace(2), newFace(3), newFace(4), newFace(5)];
+        var face5a = newFace(6);
+        var face5b = newFace(7);
+        var face5c = newFace(8);
+
         var colors = ["white","blue","red","green","#FF5900","yellow"];
+        function renderCells(tds,data){
+            for(var i=0;i<3;i++){
+                    for(var j=0;j<3;j++){
+                        tds[i][j].style.backgroundColor=colors[data[i][j]];
+                    }
+            }
+        }
         function render(){
             for(var fidx in faces){
                 var face = faces[fidx];
                 var tds = face.tds;
                 var data = face.data;
-                for(var i=0;i<3;i++){
-                    for(var j=0;j<3;j++){
-                        tds[i][j].style.backgroundColor=colors[data[i][j]];
-                    }
-                }
+                renderCells(tds,data);
             }
+            var f5a = faces[5].data;
+            renderCells(face5a.tds,f5a);
+            var f5b = [ [f5a[2][2],f5a[2][1],f5a[2][0]],
+                        [f5a[1][2],f5a[1][1],f5a[1][0]],
+                        [f5a[0][2],f5a[0][1],f5a[0][0]]
+                    ];
+            renderCells(face5b.tds,f5b);
+            renderCells(face5c.tds,f5b);
         }
 
 
