@@ -1,0 +1,255 @@
+<html>
+<head>
+    <title>Cube</title>
+    <style>
+        table {
+            border: no;
+            margin: auto;
+        }
+        table tr td table tr td {
+            border: 1px solid gray;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        } 
+
+        body{
+            text-align: center;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td></td><td></td> <td>
+                <table>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td>5</td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+
+            </td> <td></td> <td></td>
+        </tr>
+        <tr>
+            <td></td><td></td> <td>
+                <table id="table4">
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td>4</td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+
+            </td> <td></td> <td></td>
+        </tr>
+        <tr><td>
+            <table>
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td>5</td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                
+            </table>
+
+        </td>
+            <td>
+                <table id="table3">
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td>3</td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+            </td> <td>
+                <table id="table0">
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td><a onclick="move0a();render();">&#x21BB;</a></td> <td>0</td> <td><a onclick="move0b();render();">&#x21BA;</a></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+            </td> <td>
+                <table id="table1">
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td>1</td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+            </td> <td>
+
+                <table>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td>5</td> <td></td> 
+                    </tr>
+                    <tr>
+                        <td></td> <td></td> <td></td> 
+                    </tr>
+                    
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td></td><td></td> <td>                
+                <table id="table2">
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td>2</td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                
+            </table>
+        </td> <td></td> 
+        </tr>
+        <tr>
+            <td></td> <td></td> <td>                
+                <table id="table5">
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td>5</td> <td></td> 
+                </tr>
+                <tr>
+                    <td></td> <td></td> <td></td> 
+                </tr>
+                
+            </table>
+        </td> <td></td> <td></td>
+        </tr>
+    </table>
+
+    <script>
+
+        function td(tb,i,j){
+            return tb.getElementsByTagName("tr")[i].getElementsByTagName("td")[j];
+        }
+
+        function newFace(theId){
+            var tb = document.all['table'+theId];
+            return {
+                id: theId,
+                table: tb,
+                tds: [[td(tb,0,0), td(tb,0,1), td(tb,0,2)],
+                      [td(tb,1,0), td(tb,1,1), td(tb,1,2)],
+                      [td(tb,2,0), td(tb,2,1), td(tb,2,2)]
+                    ],
+                data: [[theId, theId, theId],
+                       [theId, theId, theId],
+                       [theId, theId, theId]
+                        ]
+                };
+        }
+        
+        var faces = [newFace(0), newFace(1), newFace(2), newFace(3), newFace(4), newFace(5)];
+        var colors = ["white","blue","red","green","#FF5900","yellow"];
+        function render(){
+            for(var fidx in faces){
+                var face = faces[fidx];
+                var tds = face.tds;
+                var data = face.data;
+                for(var i=0;i<3;i++){
+                    for(var j=0;j<3;j++){
+                        tds[i][j].style.backgroundColor=colors[data[i][j]];
+                    }
+                }
+            }
+        }
+
+
+        function move0a(){
+            // face0 clockwise
+            var d = faces[0].data;
+            faces[0].data= [[d[2][0], d[1][0], d[0][0]],
+                            [d[2][1], d[1][1], d[0][1]],
+                            [d[2][2], d[1][2], d[0][2]]
+                        ];
+            var f1d = faces[1].data;
+            var f2d = faces[2].data;
+            var f3d = faces[3].data;
+            var f4d = faces[4].data;
+            var f1db = [f1d[0][0],f1d[1][0],f1d[2][0]];
+            f1d[0][0]=f4d[2][0];
+            f1d[1][0]=f4d[2][1];
+            f1d[2][0]=f4d[2][2];
+            f4d[2]=[f3d[2][2],f3d[1][2],f3d[0][2]];
+            f3d[0][2]=f2d[0][0];
+            f3d[1][2]=f2d[0][1];
+            f3d[2][2]=f2d[0][2];
+            f2d[0]=[f1db[2],f1db[1],f1db[0]];
+        }
+        function move0b(){
+            // face0 anti-clockwise
+            var d = faces[0].data;
+            faces[0].data= [[d[0][2], d[1][2], d[2][2]],
+                            [d[0][1], d[1][1], d[2][1]],
+                            [d[0][0], d[1][0], d[2][0]]
+                        ];
+            var f1d = faces[1].data;
+            var f2d = faces[2].data;
+            var f3d = faces[3].data;
+            var f4d = faces[4].data;
+            var f1db = [f1d[0][0],f1d[1][0],f1d[2][0]];
+            f1d[0][0]=f2d[0][2];
+            f1d[1][0]=f2d[0][1];
+            f1d[2][0]=f2d[0][0];
+            f2d[0]=[f3d[0][2],f3d[1][2],f3d[2][2]];
+            f3d[0][2]=f4d[2][2];
+            f3d[1][2]=f4d[2][1];
+            f3d[2][2]=f4d[2][0];
+            f4d[2]=[f1db[0],f1db[1],f1db[2]];
+        }
+
+        
+
+        render();
+    </script>
+    
+
+</body>
+</html>
